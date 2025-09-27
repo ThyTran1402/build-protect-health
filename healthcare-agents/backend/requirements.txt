@@ -1,0 +1,7 @@
+fastapi==0.115.*
+uvicorn[standard]==0.30.*
+google-adk[a2a]==0.2.*
+google-cloud-firestore==2.16.*
+google-cloud-storage==2.18.*
+google-cloud-pubsub==2.21.*
+google-genai==0.3.*
