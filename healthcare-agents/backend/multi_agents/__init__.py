@@ -1,7 +1,3 @@
-"""
-Multi-agent healthcare system module
-"""
-
-from .orchestration import root_agent
-
-__all__ = ["root_agent"]
+from .intake_agent import task_loop
+from .coach_agent import coach
+from .report_agent import reporter

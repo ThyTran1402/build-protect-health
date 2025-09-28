@@ -27,30 +27,75 @@ export default function HealthcareAgentDashboard() {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<AgentResponse | null>(null);
   const [activeTab, setActiveTab] = useState<'tasks' | 'coach' | 'report'>('tasks');
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     if (!transcript || !condition || !visitType) return;
     
     setLoading(true);
+    setResponse(null); // Clear previous results
+    setError(null); // Clear previous errors
 
     try {
+      // Call the backend AI agents API
       const result = await fetch('/api/agents/process', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify({
           transcript,
           condition,
           visit_type: visitType,
-          current_metrics: { blood_sugar: 145, weight: 185 },
-          prior_metrics: { blood_sugar: 160, weight: 190 }
+          current_metrics: { 
+            blood_sugar: 145, 
+            weight: 185,
+            blood_pressure: "120/80",
+            heart_rate: 72
+          },
+          prior_metrics: { 
+            blood_sugar: 160, 
+            weight: 190,
+            blood_pressure: "130/85",
+            heart_rate: 75
+          },
+          session_id: `session_${Date.now()}` // Unique session ID
         })
       });
 
+      if (!result.ok) {
+        throw new Error(`HTTP error! status: ${result.status}`);
+      }
+
       const data = await result.json();
-      setResponse(data);
-      setActiveTab('tasks');
+      
+      // Validate response structure
+      if (data && (data.tasks || data.guidance || data.report)) {
+        setResponse(data);
+        setActiveTab('tasks');
+        console.log('AI Agents Response:', data);
+      } else {
+        throw new Error('Invalid response format from AI agents');
+      }
+
     } catch (error) {
-      console.error('Error processing:', error);
+      console.error('Error processing with AI agents:', error);
+      
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      setError(`Failed to connect with AI agents: ${errorMessage}`);
+      
+      // Show user-friendly error message in response
+      setResponse({
+        tasks: [],
+        guidance: {
+          checklist: ['Unable to process transcript at this time'],
+          cautions: ['Please check your connection and try again'],
+          questions_for_doctor: ['Contact your healthcare provider directly if urgent']
+        },
+        report: `Connection Error: Could not reach AI agents service. ${errorMessage}`
+      });
+      setActiveTab('report');
     } finally {
       setLoading(false);
     }
@@ -63,7 +108,7 @@ export default function HealthcareAgentDashboard() {
           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
             <h1 className="text-3xl font-bold flex items-center gap-3">
               <Activity className="w-8 h-8" />
-              Healthcare AI Agent Dashboard
+              Protect Health Dashboard
             </h1>
             <p className="text-blue-100 mt-2">Multi-agent system for patient care coordination</p>
           </div>
@@ -129,6 +174,16 @@ export default function HealthcareAgentDashboard() {
                   </>
                 )}
               </button>
+              
+              {error && (
+                <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <AlertCircle className="w-5 h-5 text-red-500" />
+                    <span className="text-red-700 font-medium">Error</span>
+                  </div>
+                  <p className="text-red-600 mt-1">{error}</p>
+                </div>
+              )}
             </div>
           </div>
 

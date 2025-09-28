@@ -1,0 +1,21 @@
+{
+  "name": "skin-agent",
+  "description": "Non-diagnostic skin triage from images (triage only).",
+  "version": "1.0.0",
+  "capabilities": {
+    "tools": [
+      {
+        "name": "analyze_image",
+        "description": "Returns JSON {triage: string, flags: string[], confidence: number}",
+        "input_schema": {
+          "type": "object",
+          "properties": { "gcs_uri": { "type": "string" } },
+          "required": ["gcs_uri"]
+        }
+      }
+    ]
+  },
+  "endpoints": {
+    "a2a": "https://skin-agent.example.com/.well-known/a2a"
+  }
+}
