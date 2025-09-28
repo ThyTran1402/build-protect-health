@@ -1,13 +1,9 @@
 # backend/main.py
 import os
-import sys
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from google.adk.runners import InMemoryRunner
 from multi_agents.orchestration import root_agent
-
-# Add the current directory to Python path for imports
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 app = FastAPI(title="MedAgents API")
 
@@ -20,8 +16,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize the Google ADK InMemoryRunner with our healthcare agent system
-runner = InMemoryRunner(app_name="healthcare-agents", root_agent=root_agent)
+runner = InMemoryRunner(app_name="medagents", root_agent=root_agent)
 
 @app.get("/")
 async def root():
