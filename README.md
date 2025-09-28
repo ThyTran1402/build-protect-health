@@ -1,93 +1,133 @@
-# Healthcare AI Agents - Full Stack Application
+# Protect Health 
 
-A multi-agent healthcare system with a React frontend and FastAPI backend that processes patient data through AI agents for task extraction, coaching recommendations, and health reporting.
+A comprehensive multi-agent healthcare system that processes patient data through AI agents for task extraction, coaching recommendations, and health reporting. Built with React frontend and FastAPI backend.
 
-## Project Structure
+## 🏥 Overview
+
+The Protect Health Dashboard is a modern healthcare application that leverages multiple AI agents to:
+- **Extract actionable tasks** from doctor visit transcripts
+- **Provide pre-visit coaching** and personalized guidance
+- **Generate comprehensive health reports** based on patient data
+- **Coordinate care** through intelligent agent orchestration
+
+## 🚀 Features
+
+- **Multi-Agent Processing**: Orchestrates specialized AI agents for different healthcare tasks
+- **Intelligent Task Extraction**: Automatically identifies and prioritizes healthcare tasks
+- **Personalized Coaching**: Provides tailored pre-visit guidance and checklists
+- **Comprehensive Reporting**: Generates detailed health summaries and recommendations
+- **Modern UI**: Beautiful, responsive dashboard built with React and Tailwind CSS
+- **Real-time Processing**: Fast API responses with live status updates
+
+## 🏗️ Architecture
 
 ```
-healthcare-agents/
-├── backend/                 # FastAPI backend
-│   ├── main.py             # Main FastAPI application
-│   ├── multi-agents/       # AI agent modules
-│   └── requirements.txt    # Python dependencies
-├── frontend/               # React frontend
-│   ├── src/
-│   │   ├── components/
-│   │   │   └── dashboard.tsx
-│   │   ├── App.tsx
-│   │   ├── index.tsx
-│   │   └── index.css
-│   ├── public/
-│   └── package.json
+Protect Health Dashboard/
+├── healthcare-agents/
+│   ├── backend/                 # FastAPI backend
+│   │   ├── main.py             # Main FastAPI application
+│   │   ├── multi-agents/       # AI agent modules
+│   │   │   ├── orchestration.py
+│   │   │   ├── intake-agent.py
+│   │   │   ├── coach-agent.py
+│   │   │   ├── report-agent.py
+│   │   │   └── A2A-remote.py
+│   │   └── requirements.txt    # Python dependencies
+│   └── frontend/               # React frontend
+│       ├── src/
+│       │   ├── components/
+│       │   │   └── dashboard.tsx
+│       │   ├── App.tsx
+│       │   ├── index.tsx
+│       │   └── index.css
+│       ├── public/
+│       └── package.json
+├── install-dependencies.bat    # Windows dependency installer
+├── start-backend.bat          # Backend server starter
+├── start-frontend.bat         # Frontend server starter
+├── start-both.bat             # Start both servers
 └── README.md
 ```
 
-## Features
+## 🛠️ Prerequisites
 
-- **Multi-Agent Processing**: Orchestrates multiple AI agents for healthcare data processing
-- **Task Extraction**: Extracts actionable tasks from doctor visit transcripts
-- **Coaching Recommendations**: Provides pre-visit coaching and guidance
-- **Health Reporting**: Generates comprehensive health reports
-- **Modern UI**: Beautiful React dashboard with Tailwind CSS
+- **Python 3.8+** with pip
+- **Node.js 16+** with npm
+- **Git** for version control
 
-## Quick Start
+## 📦 Installation
 
-### Prerequisites
+### Quick Start (Windows)
 
-- Python 3.8+
-- Node.js 16+
-- npm or yarn
-
-### Installation
-
-1. **Clone and navigate to the project:**
+1. **Clone the repository:**
    ```bash
-   cd healthcare-agents
+   git clone <repository-url>
+   cd build-protect-health
    ```
 
 2. **Install all dependencies:**
    ```bash
-   # Windows
    install-dependencies.bat
-   
-   # Or manually:
-   # Backend
-   cd backend
+   ```
+
+### Manual Installation
+
+1. **Backend Setup:**
+   ```bash
+   cd healthcare-agents/backend
    pip install -r requirements.txt
-   
-   # Frontend
-   cd ../frontend
+   ```
+
+2. **Frontend Setup:**
+   ```bash
+   cd healthcare-agents/frontend
    npm install
    ```
 
-### Running the Application
+## 🚀 Running the Application
 
-#### Option 1: Start Both Servers (Recommended)
+### Option 1: Start Both Servers (Recommended)
 ```bash
-# Windows
 start-both.bat
 ```
 
-#### Option 2: Start Servers Separately
-```bash
-# Terminal 1 - Backend
-start-backend.bat
-# or: cd backend && python -m uvicorn main:app --reload --port 8000
+### Option 2: Start Servers Separately
 
-# Terminal 2 - Frontend  
-start-frontend.bat
-# or: cd frontend && npm start
+**Terminal 1 - Backend:**
+```bash
+start-backend.bat
+# or: cd healthcare-agents/backend && python -m uvicorn main:app --reload --port 8000
 ```
 
-### Access the Application
+**Terminal 2 - Frontend:**
+```bash
+start-frontend.bat
+# or: cd healthcare-agents/frontend && npm start
+```
 
-- **Frontend**: http://localhost:3000
+## 🌐 Access Points
+
+- **Frontend Dashboard**: http://localhost:3000
 - **Backend API**: http://localhost:8000
 - **API Documentation**: http://localhost:8000/docs
+- **Health Check**: http://localhost:8000/health
 
-## API Endpoints
+## 📱 Usage
 
-### Main Processing Endpoint
+1. **Open the dashboard** at http://localhost:3000
+2. **Fill in the patient information:**
+   - **Patient Condition**: Enter the medical condition (e.g., "Type 2 Diabetes")
+   - **Visit Type**: Select from Follow-up, Initial, Emergency, or Routine
+   - **Visit Transcript**: Paste the doctor's visit notes or transcript
+3. **Click "Process with AI Agents"** to analyze the data
+4. **Review results** across three tabs:
+   - **Tasks**: Extracted actionable healthcare tasks with confidence scores
+   - **Pre-Visit Coaching**: Personalized checklist, cautions, and doctor questions
+   - **Health Report**: Comprehensive health summary and recommendations
+
+## 🔌 API Endpoints
+
+### Main Processing
 - `POST /api/agents/process` - Process healthcare data through all agents
 
 ### Individual Agent Endpoints
@@ -100,72 +140,112 @@ start-frontend.bat
 - `GET /` - API status
 - `GET /health` - Health check
 
-## Usage
+## 🧠 AI Agents
 
-1. **Open the frontend** at http://localhost:3000
-2. **Fill in the form**:
-   - Patient Condition (e.g., "Type 2 Diabetes")
-   - Visit Type (Follow-up, Initial, Emergency, Routine)
-   - Visit Transcript (paste doctor's notes)
-3. **Click "Process with AI Agents"**
-4. **View results** in the three tabs:
-   - **Tasks**: Extracted actionable items
-   - **Pre-Visit Coaching**: Checklist, cautions, and questions
-   - **Health Report**: Comprehensive health summary
+The system includes specialized AI agents:
 
-## Development
+- **Intake Agent**: Processes and analyzes visit transcripts
+- **Coach Agent**: Provides personalized coaching recommendations
+- **Report Agent**: Generates comprehensive health reports
+- **Orchestration**: Coordinates all agents for seamless processing
+
+## 🛠️ Development
 
 ### Backend Development
-- FastAPI with automatic API documentation
-- Multi-agent orchestration using Google ADK
-- CORS enabled for frontend communication
-- Hot reload enabled during development
+- **Framework**: FastAPI with automatic API documentation
+- **Agent System**: Google ADK for multi-agent orchestration
+- **CORS**: Enabled for frontend communication
+- **Hot Reload**: Automatic server restart on code changes
 
 ### Frontend Development
-- React with TypeScript
-- Tailwind CSS for styling
-- Lucide React for icons
-- Proxy configuration for API calls
+- **Framework**: React 18 with TypeScript
+- **Styling**: Tailwind CSS for modern, responsive design
+- **Icons**: Lucide React for consistent iconography
+- **Proxy**: Configured for seamless API communication
 
 ### Adding New Agents
-1. Create agent module in `backend/multi-agents/`
+
+1. Create agent module in `healthcare-agents/backend/multi-agents/`
 2. Import and add to orchestration in `orchestration.py`
 3. Add corresponding API endpoint in `main.py`
+4. Update frontend to handle new agent responses
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Common Issues
 
-1. **Port already in use**:
-   - Backend: Change port in `start-backend.bat` (e.g., `--port 8001`)
-   - Frontend: React will prompt to use different port
+**Port Already in Use:**
+```bash
+# Backend - change port in start-backend.bat
+python -m uvicorn main:app --reload --port 8001
 
-2. **CORS errors**:
-   - Ensure backend is running on port 8000
-   - Check CORS configuration in `main.py`
+# Frontend - React will prompt for different port
+```
 
-3. **Module import errors**:
-   - Ensure you're in the correct directory
-   - Check Python path and virtual environment
+**CORS Errors:**
+- Ensure backend is running on port 8000
+- Check CORS configuration in `main.py`
 
-4. **Frontend build errors**:
-   - Run `npm install` in frontend directory
-   - Check Node.js version compatibility
+**Module Import Errors:**
+- Verify you're in the correct directory
+- Check Python path and virtual environment
+- Ensure all dependencies are installed
 
-### Logs and Debugging
+**Frontend Build Errors:**
+- Run `npm install` in frontend directory
+- Check Node.js version compatibility
+- Clear npm cache: `npm cache clean --force`
 
-- **Backend logs**: Check the terminal running the backend server
-- **Frontend logs**: Check browser developer console
-- **API testing**: Use http://localhost:8000/docs for interactive API testing
+### Debugging
 
-## Contributing
+- **Backend Logs**: Check terminal running backend server
+- **Frontend Logs**: Check browser developer console
+- **API Testing**: Use http://localhost:8000/docs for interactive testing
+
+## 📊 Dependencies
+
+### Backend Dependencies
+- **FastAPI**: Modern, fast web framework
+- **Uvicorn**: ASGI server for FastAPI
+- **Google ADK**: Multi-agent orchestration
+- **Google Cloud**: Firestore, Storage, Pub/Sub integration
+- **AI/ML**: OpenAI, Anthropic, Google GenAI
+
+### Frontend Dependencies
+- **React**: UI framework
+- **TypeScript**: Type safety
+- **Tailwind CSS**: Utility-first CSS framework
+- **Lucide React**: Icon library
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
 4. Test both frontend and backend
-5. Submit a pull request
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
-## License
+## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+For support and questions:
+- Check the troubleshooting section above
+- Review the API documentation at http://localhost:8000/docs
+- Open an issue in the repository
+
+## 🔮 Roadmap
+
+- [ ] Enhanced AI agent capabilities
+- [ ] Mobile-responsive improvements
+- [ ] Advanced analytics dashboard
+- [ ] Integration with electronic health records
+- [ ] Real-time collaboration features
+
+---
+
+**Protect Health Dashboard** - Empowering healthcare through intelligent multi-agent systems.
