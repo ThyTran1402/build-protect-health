@@ -110,7 +110,7 @@ export default function HealthcareAgentDashboard() {
               <Activity className="w-8 h-8" />
               Protect Health Dashboard
             </h1>
-            <p className="text-blue-100 mt-2">Multi-agent system for patient care coordination</p>
+            <p className="text-blue-100 mt-2">Multi-agent system for patient healthcare</p>
           </div>
 
           <div className="p-6 bg-gray-50 border-b">
